@@ -1,0 +1,201 @@
+---
+
+Title: "DATA 607 Assignment 3"
+
+output: html_document
+
+---
+
+
+***Gehad Gad***
+
+***February 16th, 2020***
+
+***Assignment 3***
+
+
+```{r}
+#Import libraries and/or Packages
+
+#install.packages("tidyverse")
+#install.packages("htmlwidgets")
+library (stringr)
+library (tidyverse)
+
+```
+
+
+
+***Question 1. Using the 173 majors listed in fivethirtyeight.com’s College Majors dataset [https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/], provide code that identifies the majors that contain either "DATA" or "STATISTICS"***
+
+```{r}
+#Import the data into R.
+
+majors <- read.csv ("https://github.com/fivethirtyeight/data/raw/master/college-majors/majors-list.csv")
+
+```
+
+
+
+```{r}
+#Select the major(s)the contain the word DATA.
+
+DATA = majors [grep ("DATA", majors$Major),]
+
+```
+
+
+```{r}
+#Select the major(s)the contain the word STATISTICS.
+
+
+STAT = majors [grep ("STATISTICS", majors$Major),]
+```
+
+
+```{r}
+# Combine the two togther.
+
+Data_Stat = rbind (DATA, STAT)
+```
+
+
+***Question 2. Write code that transforms the data below:***
+
+[1] "bell pepper"  "bilberry"     "blackberry"   "blood orange"
+
+[5] "blueberry"    "cantaloupe"   "chili pepper" "cloudberry"  
+
+[9] "elderberry"   "lime"         "lychee"       "mulberry"    
+
+[13] "olive"        "salal berry"
+
+***Into a format like this:***
+
+c("bell pepper", "bilberry", "blackberry", "blood orange", "blueberry", "cantaloupe", "chili pepper", "cloudberry", "elderberry", "lime", "lychee", "mulberry", "olive", "salal berry")
+
+
+```{r}
+# We will create an array for all the item listed.
+
+Array = array (c("bell pepper", "bilberry",   "blackberry",  "blood orange", 
+"blueberry",  "cantaloupe" ,  "chili, pepper","cloudberry",  
+"elderberry",   "lime", "lychee", "mulberry", 
+"olive",    "salal berry"))
+
+```
+
+
+#Array
+
+#[1] "bell pepper"   "bilberry"      "blackberry"    "blood orange" 
+#[5] "blueberry"     "cantaloupe"    "chili, pepper" "cloudberry"   
+#[9] "elderberry"    "lime"          "lychee"        "mulberry"     
+#[13] "olive"         "salal berry" 
+
+
+```{r}
+#Create change the array to a vector and display the vector.
+
+Vector = as.vector (Array)
+
+dput(Vector)
+
+```
+ 
+ 
+ 
+
+***3 Describe, in words, what these expressions will match:***
+
+
+***(.)\1\1***
+
+```
+() represents group one and the . represents a character other than /n or a space. Followed by numerical reference for group 1 then remerical reference for group 1
+
+```
+
+
+***"(.)(.)\\2\\1"***
+
+
+```
+The first dot represenes a character and the first () represents group one and the second () represent group two. The second dot is a character other than /n or a space, followed by another character. Followed by "2" then "1"
+
+
+```
+
+***(..)\1***
+
+```
+The () represents a group one. The .. represent a set of two characters are followed by a numerical reference of group 1.
+
+```
+
+
+***"(.).\\1.\\1"***
+
+```
+The () represents a group one. The two .. represent a character followed by "1" followed by a . which represents a character other than /n or a space followed by "1". 
+
+```
+
+
+***"(.)(.)(.).*\\3\\2\\1"***
+
+```
+The first dot represenes a character and the first () represents group one. The second () represent group two and the second dot is a character other than /n or a space, the third dot represenes a character and the third () represents group three followed by another character, "3", "2" then "1"
+
+```
+
+
+***Question 4.Construct regular expressions to match words that:***
+
+***1. Start and end with the same character.***
+
+
+```{r}
+
+x1 <- c("sales", "saults", "scalps", "shapes", "scoop")
+
+str_view (x1, "^s")
+
+```
+
+
+
+
+```{r}
+str_view (x1, "s$")
+
+```
+
+***Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)***
+
+```{r}
+x2 <- c("shushing", "sharpshooter", "crosshatch", "sharp")
+  
+str_view (x2, " sh+")
+
+str_count (x2, "sh")
+  
+  
+```
+
+***Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)***
+
+```{r}
+
+x3 <- c ("cheese", "deeper", "breeze", "Green")
+
+str_view (x3, "ee+")
+
+for (i in x3){count = str_count (i, "e")   
+if (count >= 3){  print(i)}}
+
+```
+
+
+
+
